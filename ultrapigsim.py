@@ -65,9 +65,9 @@ for k in range(mink,maxk+1):
         minavg = average
         minavgk = k
 
-    print(f"Done! While Holding at {k} Finished on average in {average:.2f} turns, with a minimum of {minimum} turns and maximum of {maximum} turns.")
+    print(f"Done! While Holding at {k} Finished on average in {average} turns, with a minimum of {minimum} turns and maximum of {maximum} turns.")
 
-print(f"\nThe k with the lowest average is {minavgk:.2f} with an average of winning in {minavg:.2f} turns.")
+print(f"\nThe k with the lowest average is {minavgk} with an average of winning in {minavg} turns.")
 
 plt.figure(figsize=(10, 6))
 plt.plot(k_values, averages, marker='o', label="Average Turns")
