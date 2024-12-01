@@ -3,11 +3,9 @@
 # Pig Simulator for 1 player playable version
 
 import random
-import os
+import matplotlib.pyplot as plt
+import numpy as np
 
-# Clear terminal to make things cleaner
-def clear_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 SCORE_TO_WIN = 100
 FACES = 6  # Number of faces on the dice (standard is 6)
@@ -19,13 +17,15 @@ mink = int(input("Enter the minimum number the computer should hold at:\n"))
 maxk = int(input("Enter the maximum number the computer should hold at:\n"))
 n = int(input("How many times should each simulator run?\n"))
 
-minavg = 2147483647
+k_values = list(range(mink, maxk + 1))
+averages = []  # To store average turns for each k
+minavg = float('inf')  # Initialize to a very large value
 minavgk = 0
 
 print("Running...")
 for k in range(mink,maxk+1):
     average = 0
-    minimum = 2147483647
+    minimum = float('inf')
     maximum = 0
     for i in range(n):
         plyinput = ""
@@ -54,21 +54,29 @@ for k in range(mink,maxk+1):
             total_score += turnscore
 
         # statistics
-        if(turn < minimum):
-            minimum = turn
-        if(turn > maximum):
-            maximum = turn
+        minimum = min(minimum, turn)
+        maximum = max(maximum, turn)
         average += turn
 
     average /= n
+    averages.append(average)
 
     if(average < minavg):
         minavg = average
         minavgk = k
 
-    print(f"Done! While Holding at {k} Finished on average in {average} turns, with a minimum of {minimum} turns and maximum of {maximum} turns.")
+    print(f"Done! While Holding at {k} Finished on average in {average:.2f} turns, with a minimum of {minimum} turns and maximum of {maximum} turns.")
 
-print(f"\nThe k with the lowest average is {minavgk} with an average of winning in {minavg} turns.")
+print(f"\nThe k with the lowest average is {minavgk:.2f} with an average of winning in {minavg:.2f} turns.")
 
-
+plt.figure(figsize=(10, 6))
+plt.plot(k_values, averages, marker='o', label="Average Turns")
+plt.axvline(minavgk, color='r', linestyle='--', label=f"Optimal k = {minavgk}")
+plt.title("Average Turns to Win vs. Hold Threshold (k)")
+plt.xlabel("Hold Threshold (k)")
+plt.ylabel("Average Turns to Win")
+plt.grid(True)
+plt.legend()
+plt.xticks(ticks=k_values)
+plt.show()
     
