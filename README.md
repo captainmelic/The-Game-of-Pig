@@ -6,4 +6,4 @@ ultrapigsim.py runs an n number of simulations for each integer k in a given ran
 
 pigsimprob.py is just like pigsim.py, but it returns the probability of winning in a given number of turns while holding at a given value k.
 
-versuspig.py allows you to fight against the "hold at 20" strategy
+versuspig.py allows you to play against the "hold at 20" strategy
